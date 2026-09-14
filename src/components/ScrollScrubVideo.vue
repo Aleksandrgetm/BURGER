@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import ArrowIcon from './ArrowIcon.vue'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import gsap from 'gsap'
 gsap.registerPlugin(ScrollTrigger)
@@ -93,8 +94,8 @@ onBeforeUnmount(()=>{disposed=true;stop();clearTimeout(metadataTimer);trigger?.k
     <video ref="video" muted playsinline webkit-playsinline preload="auto" :poster="poster" disablepictureinpicture aria-hidden="true"></video>
     <div v-if="status!=='ready'" class="video-placeholder" role="status">
       <span class="video-placeholder-mark" aria-hidden="true"></span>
-      <div class="video-file-note"><span>{{status==='loading'?'LOADING CINEMATIC FOOTAGE':status==='missing'?'VIDEO TO BE ADDED':'VIDEO UNAVAILABLE'}}</span><code>/public{{src}}</code><button v-if="status==='unavailable'||status==='unsupported'" @click="load">Retry video loading ↗</button></div>
+      <div class="video-file-note"><span>{{status==='loading'?'LOADING CINEMATIC FOOTAGE':status==='missing'?'VIDEO TO BE ADDED':'VIDEO UNAVAILABLE'}}</span><code>/public{{src}}</code><button v-if="status==='unavailable'||status==='unsupported'" @click="load">Retry video loading <ArrowIcon /></button></div>
     </div>
-    <button v-if="status==='ready'&&reduced" class="video-motion-choice" @click="enable">Reduced motion · enable scroll video ↗</button>
+    <button v-if="status==='ready'&&reduced" class="video-motion-choice" @click="enable">Reduced motion · enable scroll video <ArrowIcon /></button>
   </div>
 </template>

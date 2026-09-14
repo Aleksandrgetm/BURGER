@@ -10,7 +10,7 @@ await page.goto('http://localhost:5173');await page.locator('.loader').waitFor({
 const installed=await readdir('public/videos');const present=['hero','burger-build','sides','final'].filter(name=>installed.includes(`${name}.mp4`)).length
 if(await page.locator('.video-placeholder').count()!==4-present)errors.push('Missing-video placeholders')
 if(await page.locator('video[src]').count()!==present)errors.push('Missing videos requested')
-if(await page.locator('main img, main canvas, main svg').count())errors.push('Old main media remains')
+if(await page.locator('main img, main canvas, main svg:not(.arrow-icon)').count())errors.push('Old main media remains')
 await page.screenshot({path:'/tmp/burgr-video-placeholder.png'})
 const clips=[['hero',0,.16],['burger-build',.26,.44],['sides',.61,.79],['final',.78,.94]]
 await page.route(/\/src\/media\.js(?:\?.*)?$/,route=>route.fulfill({contentType:'application/javascript',body:`export const videoScenes=${JSON.stringify(clips.map(([id,start,end])=>({id,start,end,visibleStart:id==='burger-build'?.235:id==='sides'?.59:id==='final'?.77:start,src:`/videos/${id}.mp4`,available:true})))}`}))

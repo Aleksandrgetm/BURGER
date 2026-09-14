@@ -3,6 +3,7 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ScrollScrubVideo from './components/ScrollScrubVideo.vue'
+import ArrowIcon from './components/ArrowIcon.vue'
 import { videoScenes } from './media'
 gsap.registerPlugin(ScrollTrigger)
 const root = ref(null), stage = ref(null), viewport = ref(null), dialog = ref(null)
@@ -92,7 +93,7 @@ onBeforeUnmount(()=>{context?.revert();videoRefs.clear();document.body.style.ove
 <template>
 <div ref="root" class="experience">
   <div v-if="!ready" class="loader" role="status"><b>BURGR<span>.</span></b><p>FIRING UP THE GRILL · {{ loaded }}%</p><i :style="{transform:`scaleX(${loaded/100})`}"></i></div>
-  <header class="navigation"><a class="logo" href="#" @click.prevent="go('intro')" aria-label="BURGR home">BURGR<span>.</span></a><nav aria-label="Main navigation"><button @click="openPanel('menu')">MENU</button><button @click="openPanel('locations')">LOCATIONS</button><button class="nav-order" @click="openPanel('order')">ORDER <span>↗</span><small v-if="cart.length">{{cart.length}}</small></button></nav></header>
+  <header class="navigation"><a class="logo" href="#" @click.prevent="go('intro')" aria-label="BURGR home">BURGR<span>.</span></a><nav aria-label="Main navigation"><button @click="openPanel('menu')">MENU</button><button @click="openPanel('locations')">LOCATIONS</button><button class="nav-order" @click="openPanel('order')">ORDER <span class="arrow-slot"><ArrowIcon /></span><small v-if="cart.length">{{cart.length}}</small></button></nav></header>
   <main ref="stage" class="scroll-story">
     <div ref="viewport" class="viewport">
       <div class="ambient"></div>
@@ -101,21 +102,21 @@ onBeforeUnmount(()=>{context?.revert();videoRefs.clear();document.body.style.ove
       <section class="chapter intro" aria-label="Not just a burger">
         <div class="eyebrow"><span class="spark">✳</span> GOOD FOOD. NO SHORTCUTS.</div>
         <h1>NOT JUST<br>A BURGER<span class="orange">.</span></h1>
-        <div class="intro-bottom"><p>SMASHED. STACKED.<br>SERVED HOT.</p><button class="round-link" @click="go('ingredients')" aria-label="Explore the ingredients">↘</button></div>
+        <div class="intro-bottom"><p>SMASHED. STACKED.<br>SERVED HOT.</p><button class="round-link" @click="go('ingredients')" aria-label="Explore the ingredients"><ArrowIcon direction="southeast" /></button></div>
         <div class="quality-stamp"><span>100% FRESH BEEF</span><strong>ALL BITE.<br>NO BULL.</strong><span>SMASHED TO ORDER</span></div>
       </section>
-      <section class="chapter ingredients" aria-label="Ingredients"><div class="eyebrow">01 / ONLY THE GOOD STUFF</div><h2>100% BEEF<br><span class="orange">0% BORING.</span></h2><div class="ingredient-list"><span v-for="(name,i) in ['BRIOCHE','BEEF','CHEDDAR','PICKLES','HOUSE SAUCE']" :key="name"><small>0{{i+1}}</small>{{name}}<b>↗</b></span></div><p class="scene-note">Real ingredients. Ridiculous flavour.<br>Nothing to hide. Everything to taste.</p></section>
+      <section class="chapter ingredients" aria-label="Ingredients"><div class="eyebrow">01 / ONLY THE GOOD STUFF</div><h2>100% BEEF<br><span class="orange">0% BORING.</span></h2><div class="ingredient-list"><span v-for="(name,i) in ['BRIOCHE','BEEF','CHEDDAR','PICKLES','HOUSE SAUCE']" :key="name"><small>0{{i+1}}</small>{{name}}<b class="ingredient-arrow"><ArrowIcon /></b></span></div><p class="scene-note">Real ingredients. Ridiculous flavour.<br>Nothing to hide. Everything to taste.</p></section>
 
       <section class="chapter assembly" aria-label="Burger assembly"><div class="eyebrow">02 / THE ANATOMY OF A CRAVING</div><h2>BUILT<br>DIFFERENT.</h2></section>
-      <section class="chapter product" aria-label="The Double Smash"><div class="eyebrow">03 / MEET YOUR NEW USUAL</div><h2>THE DOUBLE<br><span class="orange">SMASH.</span></h2><p>DOUBLE BEEF · CHEDDAR<br>PICKLES · HOUSE SAUCE</p><div class="product-action"><strong>€9.90</strong><button class="button" @click="openPanel('menu')">VIEW MENU <span>↗</span></button></div></section>
+      <section class="chapter product" aria-label="The Double Smash"><div class="eyebrow">03 / MEET YOUR NEW USUAL</div><h2>THE DOUBLE<br><span class="orange">SMASH.</span></h2><p>DOUBLE BEEF · CHEDDAR<br>PICKLES · HOUSE SAUCE</p><div class="product-action"><strong>€9.90</strong><button class="button" @click="openPanel('menu')">VIEW MENU <span class="arrow-slot"><ArrowIcon /></span></button></div></section>
       <section class="chapter sides" aria-label="Fries and drinks"><div class="eyebrow">04 / BETTER TOGETHER</div><h2>DON’T<br>STOP <span class="orange">THERE.</span></h2><p class="scene-note">Golden fries. Ice-cold sips.<br>The best things come on the side.</p></section>
 
-      <section class="chapter cta" aria-label="Order now"><div class="eyebrow">05 / READY WHEN YOU ARE</div><h2><span class="final-hungry">HUNGRY</span><br><span class="orange final-yet">YET?</span></h2><p class="final-copy">You know what to do.<br>Fresh. Hot. Smashed to order.</p><div class="cta-buttons"><button class="button" @click="openPanel('order')">ORDER NOW <span>→</span></button><button class="text-link" @click="openPanel('locations')">FIND A LOCATION</button></div></section>
+      <section class="chapter cta" aria-label="Order now"><div class="eyebrow">05 / READY WHEN YOU ARE</div><h2><span class="final-hungry">HUNGRY</span><br><span class="orange final-yet">YET?</span></h2><p class="final-copy">You know what to do.<br>Fresh. Hot. Smashed to order.</p><div class="cta-buttons"><button class="button" @click="openPanel('order')">ORDER NOW <span class="arrow-slot"><ArrowIcon direction="right" /></span></button><button class="text-link" @click="openPanel('locations')">FIND A LOCATION</button></div></section>
       <aside class="progress-rail" aria-label="Story chapters"><span>THE BURGR. STORY</span><div class="dots"><button v-for="(chapter,i) in chapters" :key="chapter" class="chapter-dot" :class="{active:i===0}" :aria-label="`Chapter ${i+1}: ${chapter}`" @click="go(chapter)"><i></i></button></div><small>06</small></aside>
       <div class="stage-bottom"><button @click="go('ingredients')"><span class="scroll-line"></span> SCROLL TO GET HUNGRY</button><span>BIG FLAVOUR. ZERO COMPROMISE.</span><span class="bottom-mark">EST. 2024 <i>✳</i></span></div>
     </div>
   </main>
-  <footer><a class="logo" href="#" @click.prevent="go('intro')">BURGR<span>.</span></a><p>GOOD FOOD.<br>NO SHORTCUTS.</p><nav aria-label="Footer navigation"><button @click="openPanel('menu')">MENU</button><button @click="openPanel('locations')">LOCATIONS</button><button @click="openPanel('order')">ORDER ↗</button></nav><span>EST. 2024</span><button @click="go('intro')">BACK TO TOP ↑</button></footer>
+  <footer><a class="logo" href="#" @click.prevent="go('intro')">BURGR<span>.</span></a><p>GOOD FOOD.<br>NO SHORTCUTS.</p><nav aria-label="Footer navigation"><button @click="openPanel('menu')">MENU</button><button @click="openPanel('locations')">LOCATIONS</button><button @click="openPanel('order')">ORDER <ArrowIcon /></button></nav><span>EST. 2024</span><button @click="go('intro')">BACK TO TOP <ArrowIcon direction="up" /></button></footer>
   <dialog ref="dialog" @cancel.prevent="closePanel" @click="e=>{if(e.target===dialog)closePanel()}"><div class="dialog-inner"><button class="close" @click="closePanel" aria-label="Close dialog">×</button><div class="eyebrow">BURGR. / {{panel}}</div><template v-if="panel==='locations'"><h2>COME<br>HUNGRY.</h2><p>Our first restaurant is on its way.</p><p class="muted">Location and opening hours will appear here once confirmed. This preview does not list a fictional restaurant.</p></template><template v-else><h2>{{panel==='order'?'YOUR CRAVING.':'THE LINEUP.'}}</h2><p v-if="panel==='order'" class="muted">Build your order below. Online checkout will open with our first restaurant.</p><div class="menu-row" v-for="item in items" :key="item.name"><div><h3>{{item.name}}</h3><p>{{item.detail}}</p></div><strong>€{{item.price.toFixed(2)}}</strong><button @click="add(item)" :aria-label="`Add ${item.name}`">+</button></div><div class="basket" v-if="cart.length"><h3>Your order · {{cart.length}} items</h3><div v-for="(item,i) in cart" :key="i" class="basket-row"><span>{{item.name}}</span><button @click="cart.splice(i,1)" :aria-label="`Remove ${item.name}`">Remove</button></div><strong>Total €{{cart.reduce((sum,item)=>sum+item.price,0).toFixed(2)}}</strong><p aria-live="polite">{{cart.length}} {{cart.length===1?'item':'items'}} in your order. Checkout coming soon.</p></div></template></div></dialog>
 </div>
 </template>

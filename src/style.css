@@ -48,3 +48,13 @@ footer p{display:block;line-height:1.6}footer nav{gap:20px}footer nav button{fon
 @media(max-height:550px) and (orientation:landscape){.cta{padding-top:22vh}.cta h2{font-size:17vh}.cta .eyebrow{margin-bottom:12px}.final-copy{margin-top:12px;font-size:10px}.cta .cta-buttons{margin-top:12px;gap:25px}.cta .button{padding:10px 20px}}
 @media(max-height:550px) and (orientation:landscape){.cta{padding-top:102px}.cta h2{font-size:15vh}.cta .eyebrow{margin-bottom:10px}}
 .final-hungry,.final-yet{display:inline-block}
+/* Fixed icon slots retain the previous control geometry without font glyphs. */
+.arrow-slot{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:21.5px;height:30px;line-height:1}
+.arrow-slot .arrow-icon{width:20px;height:20px}
+.nav-order .arrow-slot{width:21.7px}
+.cta .arrow-slot{height:26px}
+.round-link{display:inline-flex;align-items:center;justify-content:center}
+.round-link .arrow-icon{width:26px;height:26px}
+.ingredient-arrow{display:inline-flex;align-items:center;justify-content:center}
+.ingredient-arrow .arrow-icon{width:1em;height:1em}
+@media(max-width:700px){.nav-order .arrow-slot{width:20.7px}}
