@@ -9,7 +9,7 @@ const metadata=await page.locator('video[src]').evaluateAll(vs=>vs.map(v=>({src:
 if(metadata.length!==4||metadata.some(v=>v.time!==0||!Number.isFinite(v.duration)))errors.push('Initial frame/metadata')
 await page.evaluate(()=>window.assemblyElement=document.querySelector('video[src="/videos/burger-build.mp4"]'))
 if(await page.locator('video[src="/videos/product.mp4"]').count()||await page.getByText('/public/videos/product.mp4',{exact:true}).count())errors.push('Product video placeholder remains')
-if(await page.locator('main img,main svg:not(.arrow-icon),main canvas').count())errors.push('Old food graphics remain')
+if(await page.locator('main img,main svg:not(.arrow-icon):not(.starburst-icon),main canvas').count())errors.push('Old food graphics remain')
 async function seek(p){await page.evaluate(p=>scrollTo(0,(document.querySelector('.scroll-story').offsetHeight-innerHeight)*p),p);await page.waitForTimeout(600);for(const [name,start,end]of clips){const v=await page.locator(`video[src="/videos/${name}.mp4"]`).evaluate(v=>({time:v.currentTime,duration:v.duration,paused:v.paused,seeking:v.seeking}));const expected=Math.max(0,Math.min(1,(p-start)/(end-start)))*(v.duration-1/120);if(Math.abs(v.time-expected)>.05||!v.paused||v.seeking)errors.push({p,name,expected,...v})}if(Math.abs(await page.locator('.viewport').evaluate(v=>v.getBoundingClientRect().top))>1)errors.push(`Unpinned ${p}`)}
 const points=[0,.08,.16,.22,.28,.38,.5,.56,.60,.64,.68,.72,.76,.80,.82,.86,.9,.94,.97,1]
 for(const p of points){await seek(p);if([.56,.64,.72,.82,.94,.97].includes(p))await page.screenshot({path:`/tmp/burgr-sides-${p}.png`})}

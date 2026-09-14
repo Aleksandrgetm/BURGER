@@ -4,6 +4,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ScrollScrubVideo from './components/ScrollScrubVideo.vue'
 import ArrowIcon from './components/ArrowIcon.vue'
+import StarburstIcon from './components/StarburstIcon.vue'
 import { videoScenes } from './media'
 gsap.registerPlugin(ScrollTrigger)
 const root = ref(null), stage = ref(null), viewport = ref(null), dialog = ref(null)
@@ -100,7 +101,7 @@ onBeforeUnmount(()=>{context?.revert();videoRefs.clear();document.body.style.ove
       <ScrollScrubVideo :class="`scene-${scene.id}`" v-for="scene in videoScenes" :key="scene.id" :ref="el=>{if(el)videoRefs.set(scene.id,el);else videoRefs.delete(scene.id)}" :src="scene.src" :available="scene.available" controlled :start="scene.start" :end="scene.end" @settled="videoSettled(scene.id)" />
       <div class="photo-shade"></div><div class="grain"></div>
       <section class="chapter intro" aria-label="Not just a burger">
-        <div class="eyebrow"><span class="spark">✳</span> GOOD FOOD. NO SHORTCUTS.</div>
+        <div class="eyebrow"><span class="spark"><StarburstIcon /></span> GOOD FOOD. NO SHORTCUTS.</div>
         <h1>NOT JUST<br>A BURGER<span class="orange">.</span></h1>
         <div class="intro-bottom"><p>SMASHED. STACKED.<br>SERVED HOT.</p><button class="round-link" @click="go('ingredients')" aria-label="Explore the ingredients"><ArrowIcon direction="southeast" /></button></div>
         <div class="quality-stamp"><span>100% FRESH BEEF</span><strong>ALL BITE.<br>NO BULL.</strong><span>SMASHED TO ORDER</span></div>
@@ -113,7 +114,7 @@ onBeforeUnmount(()=>{context?.revert();videoRefs.clear();document.body.style.ove
 
       <section class="chapter cta" aria-label="Order now"><div class="eyebrow">05 / READY WHEN YOU ARE</div><h2><span class="final-hungry">HUNGRY</span><br><span class="orange final-yet">YET?</span></h2><p class="final-copy">You know what to do.<br>Fresh. Hot. Smashed to order.</p><div class="cta-buttons"><button class="button" @click="openPanel('order')">ORDER NOW <span class="arrow-slot"><ArrowIcon direction="right" /></span></button><button class="text-link" @click="openPanel('locations')">FIND A LOCATION</button></div></section>
       <aside class="progress-rail" aria-label="Story chapters"><span>THE BURGR. STORY</span><div class="dots"><button v-for="(chapter,i) in chapters" :key="chapter" class="chapter-dot" :class="{active:i===0}" :aria-label="`Chapter ${i+1}: ${chapter}`" @click="go(chapter)"><i></i></button></div><small>06</small></aside>
-      <div class="stage-bottom"><button @click="go('ingredients')"><span class="scroll-line"></span> SCROLL TO GET HUNGRY</button><span>BIG FLAVOUR. ZERO COMPROMISE.</span><span class="bottom-mark">EST. 2024 <i>✳</i></span></div>
+      <div class="stage-bottom"><button @click="go('ingredients')"><span class="scroll-line"></span> SCROLL TO GET HUNGRY</button><span>BIG FLAVOUR. ZERO COMPROMISE.</span><span class="bottom-mark">EST. 2024 <i><StarburstIcon /></i></span></div>
     </div>
   </main>
   <footer><a class="logo" href="#" @click.prevent="go('intro')">BURGR<span>.</span></a><p>GOOD FOOD.<br>NO SHORTCUTS.</p><nav aria-label="Footer navigation"><button @click="openPanel('menu')">MENU</button><button @click="openPanel('locations')">LOCATIONS</button><button @click="openPanel('order')">ORDER <ArrowIcon /></button></nav><span>EST. 2024</span><button @click="go('intro')">BACK TO TOP <ArrowIcon direction="up" /></button></footer>
